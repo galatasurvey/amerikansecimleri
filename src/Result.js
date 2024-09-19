@@ -88,9 +88,9 @@ function Result({ KamalaScore, TrumpScore }) {
           className="logo-fixed-bottom"
         />
         <hr />
-        <p style={{ marginTop: '0px' }}>Politika tercihlerinizin Amerika başkan adaylarına yakınlık oranları:</p>
-        <div className="chart-container" style={{ margin: '0', padding: '0', marginBottom: '-40px' }}>
-  <ResponsiveContainer width="100%" height={300}>
+        <p style={{ fontSize: '14px',marginTop: '0px' }}>Politika tercihlerinizin Amerika başkan adaylarına yakınlık oranları:</p>
+        <div className="chart-container" style={{ margin: '0', padding: '0', marginTop: '-50px', marginBottom: '-40px' }}>
+  <ResponsiveContainer width="100%" height={250}>
     <PieChart>
       <Pie
         data={data}
