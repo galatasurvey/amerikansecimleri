@@ -34,7 +34,7 @@ function Result({ KamalaScore, TrumpScore }) {
 
     const link = document.createElement('a');
     link.href = dataUrl;
-    link.download = 'anket_sonucu.png';
+    link.download = 'Galata_anket_sonucu.png';
     link.click();
   };
 
@@ -54,8 +54,12 @@ function Result({ KamalaScore, TrumpScore }) {
 
   return (
     <div className="result" ref={resultRef}>
-      <img src="/logo_full.png" alt="Logo" className="logo-fixed-bottom" />
-      <h2>Fikirlerin kime daha yakın?</h2>
+        {/* Use Base64 encoded image or ensure correct path */}
+        <img
+        src={`${process.env.PUBLIC_URL}/logo_full.png`}
+        alt="Logo"
+          className="logo-fixed-bottom"
+        /><h2>Fikirlerin Amerikan siyasetçilerinden kime daha yakın?</h2>
 
       <div className="chart-container">
         <ResponsiveContainer width="100%" height={300}>

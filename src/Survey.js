@@ -33,8 +33,8 @@ function Survey() {
       <div className="survey">
         {/* Use Base64 encoded image or ensure correct path */}
         <img
-          src="/logo_full.png"
-          alt="Logo"
+  src={`${process.env.PUBLIC_URL}/logo_full.png`}
+  alt="Logo"
           className="logo-fixed-bottom"
         />
         <h2>
