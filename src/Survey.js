@@ -28,7 +28,6 @@ function Survey() {
     return (
       <div>
         <Result KamalaScore={KamalaScore} TrumpScore={TrumpScore} />
-        <Share />
       </div>
     );
   } else {

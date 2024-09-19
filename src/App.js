@@ -15,7 +15,7 @@ function App() {
             window.open('https://galataanket.anketekatil.com/auth/register', '_blank')
           }
         >
-          Galata Anket'ten yeni anketler için kaydol.
+          Galata Anket'ten yeni anketler için kayıt ol.
         </button>
       </footer>
     </div>

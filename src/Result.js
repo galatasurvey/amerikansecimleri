@@ -1,4 +1,3 @@
-// src/Result.js
 import React, { useRef, useState } from 'react';
 import {
   PieChart,
@@ -23,8 +22,8 @@ import {
 function Result({ KamalaScore, TrumpScore }) {
   const [isLoading, setIsLoading] = useState(false);
   const totalScore = KamalaScore + TrumpScore;
-  const KamalaPercentage = ((KamalaScore / totalScore) * 100).toFixed(2);
-  const TrumpPercentage = ((TrumpScore / totalScore) * 100).toFixed(2);
+  const KamalaPercentage = ((KamalaScore / totalScore) * 100).toFixed(0);
+  const TrumpPercentage = ((TrumpScore / totalScore) * 100).toFixed(0);
 
   const data = [
     { name: 'Kamala', value: parseFloat(KamalaPercentage) },
@@ -72,51 +71,103 @@ function Result({ KamalaScore, TrumpScore }) {
       });
   };
 
-  // Define the share URL and title/message for consistency across platforms
   const shareUrl = window.location.href;
   const shareTitle = `Amerikan siyasetçilere yakınlık anketi, benim sonuçlar: ${KamalaPercentage}% Kamala, ${TrumpPercentage}% Trump. Ankete katılmak için:`;
 
   return (
-    <div className="result" ref={resultRef}>
+    <div className="result-container">
+      {/* The section to be captured in the screenshot */}
+      <div className="result" ref={resultRef}>
       <img
-        src={`${process.env.PUBLIC_URL}/logo_full.png`}
-        alt="Logo"
-        className="logo-fixed-bottom"
-      />
-      <h2>Fikirlerin Amerikan siyasetçilerinden kime daha yakın?</h2>
+          src={`${process.env.PUBLIC_URL}/logo_full.png`}
+          alt="Logo"
+          className="logo-fixed-bottom"
+        />
+        <h2>Fikirlerin Amerikan siyasetçilerinden kime daha yakın?</h2>
+        <div className="chart-container">
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={data}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={({ name, percent }) =>
+                  `${name}: ${(percent * 100).toFixed(0)}%`
+                }
+                outerRadius="40%"
+                fill="#8884d8"
+                dataKey="value"
+                isAnimationActive={true}
+              >
+                {data.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index]} />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+        <p>Verdiğiniz cevaplara göre siyasetçilere yakınlık oranları:</p>
+        <p>{KamalaPercentage}% Kamala Harris</p>
+        <p>{TrumpPercentage}% Donald Trump</p>
+        <hr />
 
-      <div className="chart-container">
-        <ResponsiveContainer width="100%" height={300}>
-          <PieChart>
-            <Pie
-              data={data}
-              cx="50%"
-              cy="50%"
-              labelLine={false}
-              label={({ name, percent }) =>
-                `${name}: ${(percent * 100).toFixed(0)}%`
-              }
-              outerRadius="40%"
-              fill="#8884d8"
-              dataKey="value"
-              isAnimationActive={true}
-            >
-              {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index]} />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend />
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
-      <p>Verdiğiniz cevaplara göre siyasetçilere yakınlık oranları:</p>
-      <p>{KamalaPercentage}% Kamala</p>
-      <p>{TrumpPercentage}% Trump</p>
+        anket linki:       <a href={shareUrl} target="_blank" rel="noopener noreferrer">
+  {shareUrl}
+</a>      </div>
+      <div className="result">
+      {/* Separate download screenshot button */}
+      <button onClick={handleCopyLink} className="button-copy-link">
+          Anket linkini kopyala, arkadaşlarına gönder.
+        </button>
+      <button className="button-copy-link" onClick={handleDownloadScreenshot}>
+        Ekran görüntüsünü al
+      </button>
 
       {isLoading && <p className="loading">İşlem yapılıyor, lütfen bekleyin...</p>}
 
-  
+      {/* Separate social share section */}
+      <div className="social-share-buttons">
+        
+        <div className="share-icons">
+          Sonuçlarını paylaş:
+          <TwitterShareButton
+            url={shareUrl}
+            title={shareTitle}
+            className="share-button"
+          >
+            <TwitterIcon size={32} round />
+          </TwitterShareButton>
+
+          <FacebookShareButton
+            url={shareUrl}
+            quote={shareTitle}
+            className="share-button"
+          >
+            <FacebookIcon size={32} round />
+          </FacebookShareButton>
+
+          <TelegramShareButton
+            url={shareUrl}
+            title={shareTitle}
+            className="share-button"
+          >
+            <TelegramIcon size={32} round />
+          </TelegramShareButton>
+
+          <WhatsappShareButton
+            url={shareUrl}
+            title={shareTitle}
+            separator=":: "
+            className="share-button"
+          >
+            <WhatsappIcon size={32} round />
+          </WhatsappShareButton>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
