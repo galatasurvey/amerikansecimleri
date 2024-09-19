@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import questions from './questions';
 import Result from './Result';
-import Share from './Share';
 
 function Survey() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
