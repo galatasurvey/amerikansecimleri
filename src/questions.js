@@ -2,7 +2,7 @@
 const questions = [
   
   {
-    text: 'Bu ankette bazı politikalar ile ilgili fikirleriniz sorulacak ve daha sonra fikirlerinizin Trump ve Kamala yakınlığı raporlanacaktır. Hiçbir cevabınız kayıt altına alınmamaktadır. Kişisel bilgileriniz sorulmamaktadır.',
+    text: 'Bu ankette bazı politikalar ile ilgili fikirleriniz sorulacak ve daha sonra fikirlerinizin Trump ve Kamala yakınlığı raporlanacaktır. Hiçbir cevabınız kayıt altına alınmamaktadır. Kişisel bilgileriniz sorulmamaktadır. Sorular yapay zekaya Amerikada tartışılan politikalar ve başkan adaylarının tutumları üzerinden yazdırılmıştır.',
     options: [
       {
         text: '10 soruluk ankete ulaşmak için tıklayınız.',
