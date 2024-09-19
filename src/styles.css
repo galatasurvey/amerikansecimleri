@@ -31,7 +31,7 @@ h1 {
   border: none;
   color: white;
   padding: 12px 24px;
-  margin: 8px 0;
+  margin: 0px 0px;
   font-size: 16px;
   font-weight: bold;
   border-radius: 5px;
@@ -131,7 +131,7 @@ h2, h3 {
   padding: 5px;
   width: 90%;
   max-width: 500px;
-  margin: 20px auto;
+  margin: 10px auto;
   border-radius: 8px;
   box-shadow: 10 10 10px #555;
   text-align: center;
@@ -268,7 +268,7 @@ button:focus {
   display: flex;
   justify-content: center;
   gap: 10px; /* Adjust the spacing between icons */
-  margin-top: 0px;
+  margin-top: -15px;
 }
 
 .button-copy-link {

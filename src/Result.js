@@ -4,7 +4,6 @@ import {
   Pie,
   Cell,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from 'recharts';
 import html2canvas from 'html2canvas';
@@ -21,6 +20,8 @@ import {
 
 function Result({ KamalaScore, TrumpScore }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [showWarning, setShowWarning] = useState(false); // State for warning message
+
   const totalScore = KamalaScore + TrumpScore;
   const KamalaPercentage = ((KamalaScore / totalScore) * 100).toFixed(0);
   const TrumpPercentage = ((TrumpScore / totalScore) * 100).toFixed(0);
@@ -63,7 +64,10 @@ function Result({ KamalaScore, TrumpScore }) {
     navigator.clipboard
       .writeText(shareUrl)
       .then(() => {
-        alert('Link kopyalandı!');
+        setShowWarning(true); // Show the warning message
+        setTimeout(() => {
+          setShowWarning(false); // Hide the warning after 2 seconds
+        }, 5000); // 2 seconds
       })
       .catch((error) => {
         console.error('Link kopyalanamadı:', error);
@@ -72,19 +76,19 @@ function Result({ KamalaScore, TrumpScore }) {
   };
 
   const shareUrl = window.location.href;
-  const shareTitle = `Amerikan siyasetçilere yakınlık anketi, benim sonuçlar: ${KamalaPercentage}% Kamala, ${TrumpPercentage}% Trump. Ankete katılmak için linke tıkla.`;
+  const shareTitle = `Amerikan siyasetçilere yakınlık anketi, benim sonuçlar: ${KamalaPercentage}% Kamala, ${TrumpPercentage}% Trump. 10 soruluk ankete katılmak için linke tıkla.`;
 
   return (
     <div className="result-container">
       {/* The section to be captured in the screenshot */}
       <div className="result" ref={resultRef}>
-      <img
+        <img
           src={`${process.env.PUBLIC_URL}/logo_full.png`}
           alt="Logo"
           className="logo-fixed-bottom"
         />
-        <h2>Fikirlerin Amerikan siyasetçilerinden kime daha yakın?</h2>
-        <div className="chart-container">
+        <h2 style={{ fontSize: '14px', textAlign: 'center', padding: '0' }}>Fikirlerin Amerikan siyasetçilerinden kime daha yakın?</h2>
+        <div className="chart-container" style={{ margin: '0', padding: '0' }}>
           <ResponsiveContainer width="100%" height={200}>
             <PieChart>
               <Pie
@@ -105,7 +109,6 @@ function Result({ KamalaScore, TrumpScore }) {
                 ))}
               </Pie>
               <Tooltip />
-              
             </PieChart>
           </ResponsiveContainer>
         </div>
@@ -114,70 +117,86 @@ function Result({ KamalaScore, TrumpScore }) {
         <p>{TrumpPercentage}% Donald Trump</p>
         <hr />
 
-        anket linki:       <a href={shareUrl} target="_blank" rel="noopener noreferrer">
-  {shareUrl}
-</a>      </div>
+        Anket linki:       <a href={shareUrl} target="_blank" rel="noopener noreferrer">
+          {shareUrl}
+        </a>
+      </div>
 
       <div className="result2">
-      {/* Separate download screenshot button */}
-      <button onClick={handleCopyLink} className="button-copy-link">
-          Anket linkini kopyala, arkadaşlarına gönder.
+        {/* Copy link button */}
+        <button onClick={handleCopyLink} className="button-copy-link">
+          <span style={{ fontSize: '12px' }}>
+            Anket linkini kopyala, arkadaşlarına gönder.
+          </span>
         </button>
-      <button className="button-copy-link" onClick={handleDownloadScreenshot}>
-        Ekran görüntüsünü al
-      </button>
 
-      {isLoading && <p className="loading">İşlem yapılıyor, lütfen bekleyin...</p>}
+        {/* Warning message that appears for 2 seconds */}
+        {showWarning && (
+          <p style={{ color: 'green', fontSize: '12px', marginTop: '10px' }}>
+            Link kopyalandı!
+          </p>
+        )}
 
-      {/* Separate social share section */}
-      <div className="social-share-buttons">
-        
-        <div className="share-icons">
-          Sonuçlarını paylaş:
-          <TwitterShareButton
-            title={shareTitle}
-            url={shareUrl}
-            className="share-button"
-          >
-            <TwitterIcon size={32} round />
-          </TwitterShareButton>
+        <button className="button-copy-link" onClick={handleDownloadScreenshot}>
+          <span style={{ fontSize: '12px' }}>
+            Ekran görüntüsünü al
+          </span>
+        </button>
 
-          <FacebookShareButton
-            quote={shareTitle}
-            url={shareUrl}
-            className="share-button"
-          >
-            <FacebookIcon size={32} round />
-          </FacebookShareButton>
+        {isLoading && <p className="loading">İşlem yapılıyor, lütfen bekleyin...</p>}
 
-          <TelegramShareButton
-            title={shareTitle}
-            url={shareUrl}
-            className="share-button"
-          >
-            <TelegramIcon size={32} round />
-          </TelegramShareButton>
+        {/* Separate social share section */}
+        <div className="social-share-buttons">
+          <div className="share-icons" style={{ display: 'flex', alignItems: 'center' }}>
+            <span style={{ fontSize: '12px' }}>
+              Sonucu Paylaş:
+            </span>
 
-          <WhatsappShareButton
-            title={shareTitle}
-            url={shareUrl}
-            className="share-button"
-          >
-            <WhatsappIcon size={32} round />
-          </WhatsappShareButton>
+            <TwitterShareButton
+              title={shareTitle}
+              url={shareUrl}
+              className="share-button"
+            >
+              <TwitterIcon size={32} round />
+            </TwitterShareButton>
+
+            <FacebookShareButton
+              quote={shareTitle}
+              url={shareUrl}
+              className="share-button"
+            >
+              <FacebookIcon size={32} round />
+            </FacebookShareButton>
+
+            <TelegramShareButton
+              title={shareTitle}
+              url={shareUrl}
+              className="share-button"
+            >
+              <TelegramIcon size={32} round />
+            </TelegramShareButton>
+
+            <WhatsappShareButton
+              title={shareTitle}
+              url={shareUrl}
+              className="share-button"
+            >
+              <WhatsappIcon size={32} round />
+            </WhatsappShareButton>
           </div>
         </div>
       </div>
       <button
-          className="custom-button"
-          onClick={() =>
-            window.open('https://galataanket.anketekatil.com/auth/register', '_blank')
-          }
-        >
+        className="custom-button"
+        onClick={() =>
+          window.open('https://galataanket.anketekatil.com/auth/register', '_blank')
+        }
+      >
+        <span style={{ fontSize: '12px' }}>
           Galata Anket'ten yeni anketler için kayıt ol.
-        </button>
-        </div>
-    
+        </span>
+      </button>
+    </div>
   );
 }
 
