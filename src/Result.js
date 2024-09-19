@@ -50,17 +50,17 @@ function Result({ KamalaScore, TrumpScore }) {
         logging: false,
       });
       const dataUrl = canvas.toDataURL('image/jpeg');
-
+  
       // Convert the base64 data URL to a Blob
       const response = await fetch(dataUrl);
       const blob = await response.blob();
       const file = new File([blob], 'Galata_anket_sonucu.jpeg', { type: blob.type });
-
+  
       // Check if Web Share API is supported AND if it's a mobile device
       if (navigator.share && isMobileDevice()) {
         await navigator.share({
           title: 'Galata Anket Sonucu',
-          text: 'Politika tercihlerinizin Amerika başkan adaylarına yakınlık oranları:',
+          text: 'Amerikan siyasetçilere yakınlık anketi, benim sonuçlar: Kamala Harris %' + KamalaPercentage + ', Donald Trump %' + TrumpPercentage + '. Ankete katılmak için tıkla: ',
           files: [file], // Share the screenshot file
         });
       } else {
@@ -78,6 +78,7 @@ function Result({ KamalaScore, TrumpScore }) {
     }
     setIsLoading(false);
   };
+  
 
   const handleCopyLink = () => {
     const shareUrl = `${window.location.origin}/`;
@@ -96,7 +97,7 @@ function Result({ KamalaScore, TrumpScore }) {
   };
 
   const shareUrl = window.location.href;
-  const shareTitle = `Amerikan siyasetçilere yakınlık anketi, benim sonuçlar: ${KamalaPercentage}% Kamala, ${TrumpPercentage}% Trump. 9 soruluk ankete katılmak için linke tıkla.`;
+  const shareTitle = `Amerikan siyasetçilere yakınlık anketi, benim sonuçlar: ${KamalaPercentage}% Kamala, ${TrumpPercentage}% Trump. 9 soruluk ankete katılmak için linke tıkla: ${shareUrl}`;
 
   return (
     <div className="result-container">
@@ -170,34 +171,39 @@ function Result({ KamalaScore, TrumpScore }) {
           window.open('https://galataanket.anketekatil.com/auth/register', '_blank')
         }
       >
+        
         <span style={{ fontSize: '12px' }}>
           Galata Anket'ten yeni anketler için kayıt ol.
         </span>
         
       </button>
-      <hr></hr>
+      <p style={{ color: 'white', fontSize: '12px', marginTop: '-15px' }}>
+            
+          </p>
         {/* Copy link button */}
         <button onClick={handleCopyLink} className="button-copy-link">
-          <span style={{ fontSize: '14px' }}>Anket linkini kopyala, paylaş.</span>
+          <span style={{ fontSize: '14px' }}>Anket linkini paylaş.</span>
         </button>
 
+        
+
+
+
+        {/* Display appropriate text based on the device */}
+        <button className="button-copy-link" onClick={handleDownloadOrShare}>
+          <span style={{ fontSize: '14px' }}>
+            {isMobileDevice() ? 'Sonucu paylaş.' : 'Sonucu indir.'}
+          </span>
+        </button>
+        {isLoading && <p  style={{ color: 'white', fontSize: '12px', marginTop: '10px' }}>İşlem yapılıyor, lütfen bekleyin...</p>}
+        
         {/* Warning message that appears for 2 seconds */}
         {showWarning && (
           <p style={{ color: 'white', fontSize: '12px', marginTop: '10px' }}>
             Link kopyalandı!
           </p>
         )}
-
-<p style={{ color: 'white', fontSize: '12px', marginTop: '-10px' }}>
-          </p>
-
-        {/* Display appropriate text based on the device */}
-        <button className="button-copy-link" onClick={handleDownloadOrShare}>
-          <span style={{ fontSize: '14px' }}>
-            {isMobileDevice() ? 'Ekran görüntüsünü paylaş.' : 'Ekran görüntüsünü kaydet.'}
-          </span>
-        </button>
-        {isLoading && <p  style={{ color: 'white', fontSize: '12px', marginTop: '10px' }}>İşlem yapılıyor, lütfen bekleyin...</p>}
+      
       </div>
     
   );

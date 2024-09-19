@@ -76,7 +76,7 @@ h1 {
 
   /* New styles */
   display: block;
-  margin: 20px auto 0 auto; /* Center the logo */
+  margin: -10px auto 10px auto; /* Center the logo */
   width: 100px; /* Adjust as needed */
 }
 
@@ -278,11 +278,11 @@ button:focus {
   background-color: #fff; /* Twitter's brand color */
 
   padding: 12px 24px;
-  margin: 5px 0px;
+  margin: 5px 1px;
   font-size: 10px;
   border-radius: 5px;
   cursor: pointer;
   width: 80%; /* Adjust width as needed */
-  max-width: 250px; /* Maximum width */
+  max-width: 175px; /* Maximum width */
   transition: background-color 0.3s ease, transform 0.2s ease;
 }

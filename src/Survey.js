@@ -39,6 +39,7 @@ function Survey() {
           alt="Logo"
           className="logo-fixed-bottom"
         />
+        <hr />
         <h2>
           Soru {currentQuestion } / {questions.length-1}
         </h2>
