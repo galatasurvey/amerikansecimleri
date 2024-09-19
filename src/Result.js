@@ -117,6 +117,7 @@ function Result({ KamalaScore, TrumpScore }) {
         anket linki:       <a href={shareUrl} target="_blank" rel="noopener noreferrer">
   {shareUrl}
 </a>      </div>
+
       <div className="result2">
       {/* Separate download screenshot button */}
       <button onClick={handleCopyLink} className="button-copy-link">
@@ -167,7 +168,16 @@ function Result({ KamalaScore, TrumpScore }) {
           </div>
         </div>
       </div>
-    </div>
+      <button
+          className="custom-button"
+          onClick={() =>
+            window.open('https://galataanket.anketekatil.com/auth/register', '_blank')
+          }
+        >
+          Galata Anket'ten yeni anketler için kayıt ol.
+        </button>
+        </div>
+    
   );
 }
 
