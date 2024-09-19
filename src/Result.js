@@ -42,7 +42,6 @@ function Result({ KamalaScore, TrumpScore }) {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      alert('Ekran görüntüsü indirildi!');
     } catch (error) {
       console.error('Ekran görüntüsü alınamadı:', error);
       alert('Ekran görüntüsü alınırken bir hata oluştu. Lütfen tekrar deneyin.');
@@ -113,10 +112,6 @@ function Result({ KamalaScore, TrumpScore }) {
       <button className="custom-button" onClick={handleDownloadScreenshot}>
         Ekran görüntüsünü al
       </button>
-
-      <p className="save-instructions">
-        Ekran görüntüsünü aldıktan sonra, görüntüyü kaydetmek için indirdiğiniz resmi uzun basın ve "Fotoğraflara Ekle" veya benzeri seçeneği seçin.
-      </p>
     </div>
   );
 }
