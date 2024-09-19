@@ -9,7 +9,7 @@ const questions = [
     ),
     options: [
       {
-        text: '10 soruluk ankete ulaşmak için tıklayınız.',
+        text: '9 soruluk ankete ulaşmak için tıklayınız.',
         weight: 0,
       },
     ],

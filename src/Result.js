@@ -76,7 +76,7 @@ function Result({ KamalaScore, TrumpScore }) {
   };
 
   const shareUrl = window.location.href;
-  const shareTitle = `Amerikan siyasetçilere yakınlık anketi, benim sonuçlar: ${KamalaPercentage}% Kamala, ${TrumpPercentage}% Trump. 10 soruluk ankete katılmak için linke tıkla.`;
+  const shareTitle = `Amerikan siyasetçilere yakınlık anketi, benim sonuçlar: ${KamalaPercentage}% Kamala, ${TrumpPercentage}% Trump. 9 soruluk ankete katılmak için linke tıkla.`;
 
   return (
     <div className="result-container">

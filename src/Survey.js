@@ -40,7 +40,7 @@ function Survey() {
           className="logo-fixed-bottom"
         />
         <h2>
-          Soru {currentQuestion + 1} / {questions.length}
+          Soru {currentQuestion } / {questions.length-1}
         </h2>
         <h3>{question.text}</h3>
         <div className="options">
