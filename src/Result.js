@@ -60,8 +60,8 @@ function Result({ KamalaScore, TrumpScore }) {
       if (navigator.share && isMobileDevice()) {
         await navigator.share({
           title: 'Galata Anket Sonucu',
-          text: 'Amerikan siyasetçilere yakınlık anketi, benim sonuçlar: Kamala Harris %' + KamalaPercentage + ', Donald Trump %' + TrumpPercentage + '. Ankete katılmak için tıkla:'+ shareUrl,
           files: [file], // Share the screenshot file
+          text: 'Amerikan siyasetçilere yakınlık anketi, benim sonuçlar: Kamala Harris %' + KamalaPercentage + ', Donald Trump %' + TrumpPercentage + '. Ankete katılmak için tıkla: '+ shareUrl,
         });
       } else {
         // Fallback for desktop: Download the screenshot
