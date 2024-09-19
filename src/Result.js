@@ -72,7 +72,7 @@ function Result({ KamalaScore, TrumpScore }) {
   };
 
   const shareUrl = window.location.href;
-  const shareTitle = `Amerikan siyasetçilere yakınlık anketi, benim sonuçlar: ${KamalaPercentage}% Kamala, ${TrumpPercentage}% Trump. Ankete katılmak için:`;
+  const shareTitle = `Amerikan siyasetçilere yakınlık anketi, benim sonuçlar: ${KamalaPercentage}% Kamala, ${TrumpPercentage}% Trump. Ankete katılmak için linke tıkla.`;
 
   return (
     <div className="result-container">
@@ -134,33 +134,32 @@ function Result({ KamalaScore, TrumpScore }) {
         <div className="share-icons">
           Sonuçlarını paylaş:
           <TwitterShareButton
-            url={shareUrl}
             title={shareTitle}
+            url={shareUrl}
             className="share-button"
           >
             <TwitterIcon size={32} round />
           </TwitterShareButton>
 
           <FacebookShareButton
-            url={shareUrl}
             quote={shareTitle}
+            url={shareUrl}
             className="share-button"
           >
             <FacebookIcon size={32} round />
           </FacebookShareButton>
 
           <TelegramShareButton
-            url={shareUrl}
             title={shareTitle}
+            url={shareUrl}
             className="share-button"
           >
             <TelegramIcon size={32} round />
           </TelegramShareButton>
 
           <WhatsappShareButton
-            url={shareUrl}
             title={shareTitle}
-            separator=":: "
+            url={shareUrl}
             className="share-button"
           >
             <WhatsappIcon size={32} round />
