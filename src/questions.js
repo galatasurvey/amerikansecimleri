@@ -87,15 +87,16 @@ const questions = [
     ],
   },
   {
-    text: 'Şirketlere yönelik daha sıkı düzenlemeleri destekliyorum.',
-    party: 'Kamala',
-    weight: 2,
-  },{
     text: 'Ekonomik düzenlemeler ve iş dünyası politikaları hakkında ne düşünüyorsunuz?',
     options: [
       {
         text: 'İşletmeler üzerindeki düzenlemeleri azaltarak büyümeyi destekliyorum.',
         party: 'Trump',
+        weight: 2,
+      },
+      {
+        text: 'Şirketlere yönelik daha sıkı düzenlemeleri destekliyorum.',
+        party: 'Kamala',
         weight: 2,
       },
       
