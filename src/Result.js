@@ -34,7 +34,7 @@ function Result({ KamalaScore, TrumpScore }) {
         allowTaint: false,
         logging: false, // Disable logging for cleaner console
       });
-      const dataUrl = canvas.toDataURL('image/png');
+      const dataUrl = canvas.toDataURL('image/jpeg');
 
       const link = document.createElement('a');
       link.href = dataUrl;
