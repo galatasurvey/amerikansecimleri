@@ -5,7 +5,7 @@ const questions = [
     text: 'Bu ankette bazı politikar ile ilgili fikirleriniz sorulacak ve daha sonra fikirlerinizin Trump ve Kamala yakınlığı raporlanacaktır. Hiçbir cevabınız kayıt altına alınmamaktadır. Kişisel bilgileriniz sorulmamaktadır.',
     options: [
       {
-        text: '9 soruluk ankete ulaşmak için tıklayınız.',
+        text: '10 soruluk ankete ulaşmak için tıklayınız.',
         weight: 0,
       },
     ],

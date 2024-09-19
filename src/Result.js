@@ -32,13 +32,13 @@ function Result({ KamalaScore, TrumpScore }) {
       const canvas = await html2canvas(element, {
         useCORS: true,
         allowTaint: false,
-        logging: true, // Enable logging for debugging
+        logging: false, // Disable logging for cleaner console
       });
       const dataUrl = canvas.toDataURL('image/png');
 
       const link = document.createElement('a');
       link.href = dataUrl;
-      link.download = 'Galata_anket_sonucu.png';
+      link.download = 'Galata_anket_sonucu.jpeg';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -50,10 +50,8 @@ function Result({ KamalaScore, TrumpScore }) {
     setIsLoading(false);
   };
 
-  // Set the survey start URL
-  const shareUrl = `${window.location.origin}/`; // Adjust this if your survey starts at a different path
-
   const handleCopyLink = () => {
+    const shareUrl = `${window.location.origin}/`; // Adjust this if your survey starts at a different path
     navigator.clipboard
       .writeText(shareUrl)
       .then(() => {
@@ -67,7 +65,7 @@ function Result({ KamalaScore, TrumpScore }) {
 
   return (
     <div className="result" ref={resultRef}>
-      {/* Use Base64 encoded image or ensure correct path */}
+      {/* Ensure the logo is placed in the public folder: public/logo_full.png */}
       <img
         src={`${process.env.PUBLIC_URL}/logo_full.png`}
         alt="Logo"
@@ -115,6 +113,10 @@ function Result({ KamalaScore, TrumpScore }) {
       <button className="custom-button" onClick={handleDownloadScreenshot}>
         Ekran görüntüsünü al
       </button>
+
+      <p className="save-instructions">
+        Ekran görüntüsünü aldıktan sonra, görüntüyü kaydetmek için indirdiğiniz resmi uzun basın ve "Fotoğraflara Ekle" veya benzeri seçeneği seçin.
+      </p>
     </div>
   );
 }
