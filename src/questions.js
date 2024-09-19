@@ -110,7 +110,7 @@ const questions = [
     text: 'Dış politika ve uluslararası ilişkiler konusunda hangi yaklaşımları destekliyorsunuz?',
     options: [
       {
-        text: 'Ulusal çıkarları ön planda tutmayı ve anlaşmaları yeniden müzakere etmeyi destekliyorum.',
+        text: 'Ulusal çıkarları ön planda tutmayı ve uluslararası anlaşmaları yeniden müzakere etmeyi destekliyorum.',
         party: 'Trump',
         weight: 2,
       },
@@ -125,12 +125,12 @@ const questions = [
     text: 'Ceza adaleti ve polis reformu konusunda hangi politikaları destekliyorsunuz?',
     options: [
       {
-        text: 'Adalet sisteminde hesap verebilirliği artırmayı destekliyorum.',
+        text: 'Yetkililerin hesap verebilirliğinin artırması önceliyorum.',
         party: 'Kamala',
         weight: 2,
       },
       {
-        text: 'Kanun ve düzeni sağlamayı ve kolluk kuvvetlerini güçlü şekilde destekliyorum.',
+        text: 'Kanun ve düzenin sağlanmasını önceliyorum.',
         party: 'Trump',
         weight: 2,
       },

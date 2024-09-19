@@ -27,7 +27,7 @@ function Result({ KamalaScore, TrumpScore }) {
   const TrumpPercentage = ((TrumpScore / totalScore) * 100).toFixed(0);
 
   const data = [
-    { name: 'Kamala', value: parseFloat(KamalaPercentage) },
+    { name: 'Harris', value: parseFloat(KamalaPercentage) },
     { name: 'Trump', value: parseFloat(TrumpPercentage) },
   ];
 
@@ -67,7 +67,7 @@ function Result({ KamalaScore, TrumpScore }) {
         setShowWarning(true); // Show the warning message
         setTimeout(() => {
           setShowWarning(false); // Hide the warning after 2 seconds
-        }, 5000); // 2 seconds
+        }, 2000); // 2 seconds
       })
       .catch((error) => {
         console.error('Link kopyalanamadı:', error);
@@ -87,46 +87,65 @@ function Result({ KamalaScore, TrumpScore }) {
           alt="Logo"
           className="logo-fixed-bottom"
         />
-        <h2 style={{ fontSize: '14px', textAlign: 'center', padding: '0' }}>Fikirlerin Amerikan siyasetçilerinden kime daha yakın?</h2>
-        <div className="chart-container" style={{ margin: '0', padding: '0' }}>
-          <ResponsiveContainer width="100%" height={200}>
-            <PieChart>
-              <Pie
-                data={data}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={({ name, percent }) =>
-                  `${name}: ${(percent * 100).toFixed(0)}%`
-                }
-                outerRadius="40%"
-                fill="#8884d8"
-                dataKey="value"
-                isAnimationActive={true}
-              >
-                {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index]} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
-        <p style={{ marginTop: '0px' }}>Verdiğiniz cevaplara göre siyasetçilere yakınlık oranları:</p>
-        <p>{KamalaPercentage}% Kamala Harris</p>
-        <p>{TrumpPercentage}% Donald Trump</p>
         <hr />
+        <p style={{ marginTop: '0px' }}>Politika tercihlerinizin Amerika başkan adaylarına yakınlık oranları:</p>
+        <div className="chart-container" style={{ margin: '0', padding: '0', marginBottom: '-40px' }}>
+  <ResponsiveContainer width="100%" height={300}>
+    <PieChart>
+      <Pie
+        data={data}
+        cx="50%"
+        cy="50%"
+        labelLine={false}
+        label={({ name, percent }) =>
+          `${name}: ${(percent * 100).toFixed(0)}%`
+        }
+        outerRadius="40%"
+        fill="#8884d8"
+        dataKey="value"
+        isAnimationActive={true}
+      >
+        {data.map((entry, index) => (
+          <Cell key={`cell-${index}`} fill={COLORS[index]} />
+        ))}
+      </Pie>
+      <Tooltip />
+    </PieChart>
+  </ResponsiveContainer>
+</div>
 
-        Anket linki:       <a href={shareUrl} target="_blank" rel="noopener noreferrer">
+{/* Conditional message based on the higher percentage */}
+{KamalaPercentage > TrumpPercentage ? (
+  <p style={{ color: '#0000FF', fontSize: '18px', fontWeight: 'bold', marginTop: '0px' }}>
+    Demokratlara daha yakınsınız!
+  </p>
+) : (
+  <p style={{ color: '#FF0000', fontSize: '18px', fontWeight: 'bold', marginTop: '5px' }}>
+    Cumhuriyetçilere daha yakınsınız!
+  </p>
+)}
+
+        <hr />
+        Anket linki: <a href={shareUrl} target="_blank" rel="noopener noreferrer" style={{ backgroundColor: "#ccc", padding: '2px 4px', borderRadius: '4px', textDecoration: 'none', color: 'black' }}>
           {shareUrl}
         </a>
-      </div>
 
+      </div>
+      <button
+        className="custom-button"
+        onClick={() =>
+          window.open('https://galataanket.anketekatil.com/auth/register', '_blank')
+        }
+      >
+        <span style={{ fontSize: '12px' }}>
+          Galata Anket'ten yeni anketler için kayıt ol.
+        </span>
+      </button>
       <div className="result2">
         {/* Copy link button */}
         <button onClick={handleCopyLink} className="button-copy-link">
-          <span style={{ fontSize: '12px' }}>
-            Anket linkini kopyala, arkadaşlarına gönder.
+          <span style={{ fontSize: '14px' }}>
+            Anket linkini kopyala, gönder.
           </span>
         </button>
 
@@ -136,12 +155,6 @@ function Result({ KamalaScore, TrumpScore }) {
             Link kopyalandı!
           </p>
         )}
-
-        <button className="button-copy-link" onClick={handleDownloadScreenshot}>
-          <span style={{ fontSize: '12px' }}>
-            Ekran görüntüsünü al
-          </span>
-        </button>
 
         {isLoading && <p className="loading">İşlem yapılıyor, lütfen bekleyin...</p>}
 
@@ -185,17 +198,14 @@ function Result({ KamalaScore, TrumpScore }) {
             </WhatsappShareButton>
           </div>
         </div>
+        <button className="button-copy-link" onClick={handleDownloadScreenshot}>
+          <span style={{ fontSize: '14px' }}>
+            Ekran görüntüsünü kaydet.
+          </span>
+        </button>
+
       </div>
-      <button
-        className="custom-button"
-        onClick={() =>
-          window.open('https://galataanket.anketekatil.com/auth/register', '_blank')
-        }
-      >
-        <span style={{ fontSize: '12px' }}>
-          Galata Anket'ten yeni anketler için kayıt ol.
-        </span>
-      </button>
+
     </div>
   );
 }

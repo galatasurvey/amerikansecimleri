@@ -31,7 +31,7 @@ h1 {
   border: none;
   color: white;
   padding: 12px 24px;
-  margin: 0px 0px;
+  margin: 5px 0px;
   font-size: 16px;
   font-weight: bold;
   border-radius: 5px;
@@ -43,7 +43,7 @@ h1 {
 
 /* Hover effect */
 .custom-button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #c05909; /* Darker blue on hover */
   transform: translateY(-2px); /* Slight lift on hover */
 }
 
@@ -116,7 +116,7 @@ h2, h3 {
   background-color: #fff;
   padding: 20px;
   width: 90%;
-  max-width: 600px;
+  max-width: 400px;
   margin: 0px auto;
   border-radius: 8px;
   box-shadow: 0 0 10px #ccc;
@@ -130,8 +130,8 @@ h2, h3 {
   background-color: #fff;
   padding: 5px;
   width: 90%;
-  max-width: 500px;
-  margin: 10px auto;
+  max-width: 400px;
+  margin: 0px auto;
   border-radius: 8px;
   box-shadow: 10 10 10px #555;
   text-align: center;
@@ -155,11 +155,11 @@ h2, h3 {
 }
 
 button {
-  margin: 10px 0;
+  margin: 3px 0;
   padding: 12px 24px;
   font-size: 16px;
   cursor: pointer;
-  width: 100%;
+  width: 90%;
   max-width: 400px;
   border: none;
   border-radius: 4px;
