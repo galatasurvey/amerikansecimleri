@@ -117,7 +117,7 @@ function Result({ KamalaScore, TrumpScore }) {
         anket linki:       <a href={shareUrl} target="_blank" rel="noopener noreferrer">
   {shareUrl}
 </a>      </div>
-      <div className="result">
+      <div className="result2">
       {/* Separate download screenshot button */}
       <button onClick={handleCopyLink} className="button-copy-link">
           Anket linkini kopyala, arkadaşlarına gönder.
