@@ -13,14 +13,15 @@ const questions = [
   {
     text: 'Sağlık hizmetleri konusunda hangi politikaları destekliyorsunuz?',
     options: [
-      {
-        text: 'Özel sağlık çözümlerini teşvik etmeyi destekliyorum.',
-        party: 'Trump',
-        weight: 2,
-      },
+      
       {
         text: 'Sağlık hizmetinin devlet tarafından sağlanmasını destekliyorum.',
         party: 'Kamala',
+        weight: 2,
+      },
+      {
+        text: 'Özel sağlık çözümlerini teşvik etmeyi destekliyorum.',
+        party: 'Trump',
         weight: 2,
       },
     ],
@@ -44,13 +45,13 @@ const questions = [
     text: 'İklim değişikliği ve çevre politikaları hakkında görüşleriniz nelerdir?',
     options: [
       {
-        text: 'Çevresel düzenlemeleri azaltarak enerji sektörünü desteklemeyi tercih ediyorum.',
-        party: 'Trump',
+        text: 'İklim değişikliğiyle mücadele için kapsamlı planları destekliyorum.',
+        party: 'Kamala',
         weight: 2,
       },
       {
-        text: 'İklim değişikliğiyle mücadele için kapsamlı planları destekliyorum.',
-        party: 'Kamala',
+        text: 'Çevresel düzenlemeleri azaltarak enerji sektörünü desteklemeyi tercih ediyorum.',
+        party: 'Trump',
         weight: 2,
       },
     ],
@@ -86,6 +87,10 @@ const questions = [
     ],
   },
   {
+    text: 'Şirketlere yönelik daha sıkı düzenlemeleri destekliyorum.',
+    party: 'Kamala',
+    weight: 2,
+  },{
     text: 'Ekonomik düzenlemeler ve iş dünyası politikaları hakkında ne düşünüyorsunuz?',
     options: [
       {
@@ -93,11 +98,7 @@ const questions = [
         party: 'Trump',
         weight: 2,
       },
-      {
-        text: 'Şirketlere yönelik daha sıkı düzenlemeleri destekliyorum.',
-        party: 'Kamala',
-        weight: 2,
-      },
+      
     ],
   },
   {
@@ -119,15 +120,16 @@ const questions = [
     text: 'Ceza adaleti ve polis reformu konusunda hangi politikaları destekliyorsunuz?',
     options: [
       {
-        text: 'Kanun ve düzeni sağlamayı ve kolluk kuvvetlerini güçlü şekilde destekliyorum.',
-        party: 'Trump',
-        weight: 2,
-      },
-      {
         text: 'Adalet sisteminde hesap verebilirliği artırmayı destekliyorum.',
         party: 'Kamala',
         weight: 2,
       },
+      {
+        text: 'Kanun ve düzeni sağlamayı ve kolluk kuvvetlerini güçlü şekilde destekliyorum.',
+        party: 'Trump',
+        weight: 2,
+      },
+      
     ],
   },
   {
