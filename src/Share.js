@@ -78,45 +78,56 @@ function Result({ KamalaScore, TrumpScore }) {
 
   return (
     <div className="result" ref={resultRef}>
-      <img
-        src={`${process.env.PUBLIC_URL}/logo_full.png`}
-        alt="Logo"
-        className="logo-fixed-bottom"
-      />
-      <h2>Fikirlerin Amerikan siyasetçilerinden kime daha yakın?</h2>
+    
+      <div className="social-share-buttons">
+  <button onClick={handleCopyLink} className="button-copy-link">
+    Anket linkini kopyala, arkadaşlarına gönder.
+  </button>
+  <div className="share-icons">
+  Sonuçlarını paylaş:
+    {/* Twitter Share Button */}
+    <TwitterShareButton
+      url={shareUrl}
+      title={shareTitle}
+      className="share-button"
+    >
+      <TwitterIcon size={32} round />
+    </TwitterShareButton>
 
-      <div className="chart-container">
-        <ResponsiveContainer width="100%" height={300}>
-          <PieChart>
-            <Pie
-              data={data}
-              cx="50%"
-              cy="50%"
-              labelLine={false}
-              label={({ name, percent }) =>
-                `${name}: ${(percent * 100).toFixed(0)}%`
-              }
-              outerRadius="40%"
-              fill="#8884d8"
-              dataKey="value"
-              isAnimationActive={true}
-            >
-              {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index]} />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend />
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
-      <p>Verdiğiniz cevaplara göre siyasetçilere yakınlık oranları:</p>
-      <p>{KamalaPercentage}% Kamala</p>
-      <p>{TrumpPercentage}% Trump</p>
+    {/* Facebook Share Button */}
+    <FacebookShareButton
+      url={shareUrl}
+      quote={shareTitle}
+      className="share-button"
+    >
+      <FacebookIcon size={32} round />
+    </FacebookShareButton>
 
-      {isLoading && <p className="loading">İşlem yapılıyor, lütfen bekleyin...</p>}
+    {/* Telegram Share Button */}
+    <TelegramShareButton
+      url={shareUrl}
+      title={shareTitle}
+      className="share-button"
+    >
+      <TelegramIcon size={32} round />
+    </TelegramShareButton>
 
-  
+    {/* WhatsApp Share Button */}
+    <WhatsappShareButton
+      url={shareUrl}
+      title={shareTitle}
+      separator=":: "
+      className="share-button"
+    >
+      <WhatsappIcon size={32} round />
+    </WhatsappShareButton>
+  </div>
+</div>
+
+
+      <button className="custom-button" onClick={handleDownloadScreenshot}>
+        Ekran görüntüsünü al
+      </button>
     </div>
   );
 }

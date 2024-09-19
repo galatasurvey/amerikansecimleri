@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import questions from './questions';
 import Result from './Result';
+import Share from './Share';
 
 function Survey() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -25,7 +26,10 @@ function Survey() {
 
   if (isFinished) {
     return (
-      <Result KamalaScore={KamalaScore} TrumpScore={TrumpScore} />
+      <div>
+        <Result KamalaScore={KamalaScore} TrumpScore={TrumpScore} />
+        <Share />
+      </div>
     );
   } else {
     const question = questions[currentQuestion];
@@ -33,8 +37,8 @@ function Survey() {
       <div className="survey">
         {/* Use Base64 encoded image or ensure correct path */}
         <img
-        src={`${process.env.PUBLIC_URL}/logo_full.png`}
-        alt="Logo"
+          src={`${process.env.PUBLIC_URL}/logo_full.png`}
+          alt="Logo"
           className="logo-fixed-bottom"
         />
         <h2>
@@ -52,10 +56,8 @@ function Survey() {
           ))}
         </div>
       </div>
-      
     );
   }
 }
 
 export default Survey;
-
