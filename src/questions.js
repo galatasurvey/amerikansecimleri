@@ -1,5 +1,15 @@
 // src/questions.js
 const questions = [
+  
+  {
+    text: 'Bu ankette bazı politikar ile ilgili fikirleriniz sorulacak ve daha sonra fikirlerinizin Trump ve Kamala yakınlığı raporlanacaktır. Hiçbir cevabınız kayıt altına alınmamaktadır. Kişisel bilgileriniz sorulmamaktadır.',
+    options: [
+      {
+        text: '9 soruluk ankete ulaşmak için tıklayınız.',
+        weight: 0,
+      },
+    ],
+  },
   {
     text: 'Sağlık hizmetleri konusunda hangi politikaları destekliyorsunuz?',
     options: [
@@ -9,14 +19,9 @@ const questions = [
         weight: 2,
       },
       {
-        text: 'Herkes için sağlık hizmeti sağlamayı amaçlayan programları destekliyorum.',
+        text: 'Sağlık hizmetinin devlet tarafından sağlanmasını destekliyorum.',
         party: 'Kamala',
         weight: 2,
-      },
-      {
-        text: 'Mevcut sistemi iyileştirerek seçenekleri genişletmeyi tercih ediyorum.',
-        party: 'Kamala',
-        weight: 1,
       },
     ],
   },
@@ -33,11 +38,6 @@ const questions = [
         party: 'Kamala',
         weight: 2,
       },
-      {
-        text: 'Mevcut vergi politikalarını korumayı tercih ediyorum.',
-        party: 'Trump',
-        weight: 1,
-      },
     ],
   },
   {
@@ -52,11 +52,6 @@ const questions = [
         text: 'İklim değişikliğiyle mücadele için kapsamlı planları destekliyorum.',
         party: 'Kamala',
         weight: 2,
-      },
-      {
-        text: 'Çevreyi korurken ekonomik büyümeyi de gözeten politikaları tercih ediyorum.',
-        party: 'Kamala',
-        weight: 1,
       },
     ],
   },
@@ -73,11 +68,6 @@ const questions = [
         party: 'Kamala',
         weight: 2,
       },
-      {
-        text: 'Sınır güvenliğini güçlendirirken insancıl göç reformlarını da destekliyorum.',
-        party: 'Kamala',
-        weight: 1,
-      },
     ],
   },
   {
@@ -92,11 +82,6 @@ const questions = [
         text: 'Sıkı kontroller ve bazı silahların yasaklanması gibi önlemleri destekliyorum.',
         party: 'Kamala',
         weight: 2,
-      },
-      {
-        text: 'Silah haklarını korurken makul kontrol önlemlerini de destekliyorum.',
-        party: 'Kamala',
-        weight: 1,
       },
     ],
   },
@@ -113,11 +98,6 @@ const questions = [
         party: 'Kamala',
         weight: 2,
       },
-      {
-        text: 'İş dünyasını desteklerken temel düzenlemeleri sürdürmeyi tercih ediyorum.',
-        party: 'Trump',
-        weight: 1,
-      },
     ],
   },
   {
@@ -129,15 +109,10 @@ const questions = [
         weight: 2,
       },
       {
-        text: 'Müttefiklerle iş birliğini güçlendirmeyi ve anlaşmalara bağlı kalmayı destekliyorum.',
+        text: 'Müttefiklerle iş birliğini güçlendirmeyi ve uluslararası anlaşmalara bağlı kalmayı destekliyorum.',
         party: 'Kamala',
         weight: 2,
-      },
-      {
-        text: 'Uluslararası iş birliğini sürdürürken bağımsızlığı da korumayı tercih ediyorum.',
-        party: 'Trump',
-        weight: 1,
-      },
+      }
     ],
   },
   {
@@ -149,14 +124,9 @@ const questions = [
         weight: 2,
       },
       {
-        text: 'Adalet sisteminde reform yapmayı ve hesap verebilirliği artırmayı destekliyorum.',
+        text: 'Adalet sisteminde hesap verebilirliği artırmayı destekliyorum.',
         party: 'Kamala',
         weight: 2,
-      },
-      {
-        text: 'Suçla mücadele ederken bazı reformları da destekliyorum.',
-        party: 'Kamala',
-        weight: 1,
       },
     ],
   },
@@ -164,7 +134,7 @@ const questions = [
     text: 'Eğitim politikaları hakkında ne düşünüyorsunuz?',
     options: [
       {
-        text: 'Okul seçimini ve özel seçenekleri teşvik etmeyi destekliyorum.',
+        text: 'Özel okul seçeneklerini teşvik etmeyi destekliyorum.',
         party: 'Trump',
         weight: 2,
       },
@@ -173,33 +143,9 @@ const questions = [
         party: 'Kamala',
         weight: 2,
       },
-      {
-        text: 'Mevcut sistemi korurken iyileştirmeler yapmayı tercih ediyorum.',
-        party: 'Kamala',
-        weight: 1,
-      },
     ],
   },
-  {
-    text: 'Eşitlik ve insan hakları konusundaki görüşleriniz nelerdir?',
-    options: [
-      {
-        text: 'Geleneksel aile değerlerini korumayı destekliyorum.',
-        party: 'Trump',
-        weight: 2,
-      },
-      {
-        text: 'Herkes için eşit hakları ve ayrımcılık karşıtı yasaları destekliyorum.',
-        party: 'Kamala',
-        weight: 2,
-      },
-      {
-        text: 'Bireysel haklara saygı duyulmalı, ancak dini özgürlükler de korunmalı.',
-        party: 'Trump',
-        weight: 1,
-      },
-    ],
-  },
+  
 ];
 
 export default questions;
