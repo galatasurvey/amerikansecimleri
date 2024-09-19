@@ -20,7 +20,7 @@ import {
 
 function Result({ KamalaScore, TrumpScore }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [showWarning, setShowWarning] = useState(false); // State for warning message
+  const [showWarning, setShowWarning] = useState(false);
 
   const totalScore = KamalaScore + TrumpScore;
   const KamalaPercentage = ((KamalaScore / totalScore) * 100).toFixed(0);
@@ -35,7 +35,12 @@ function Result({ KamalaScore, TrumpScore }) {
 
   const resultRef = useRef(null);
 
-  const handleDownloadScreenshot = async () => {
+  // Function to check if the user is on mobile
+  const isMobileDevice = () => {
+    return /Mobi|Android/i.test(navigator.userAgent);
+  };
+
+  const handleDownloadOrShare = async () => {
     setIsLoading(true);
     try {
       const element = resultRef.current;
@@ -46,28 +51,43 @@ function Result({ KamalaScore, TrumpScore }) {
       });
       const dataUrl = canvas.toDataURL('image/jpeg');
 
-      const link = document.createElement('a');
-      link.href = dataUrl;
-      link.download = 'Galata_anket_sonucu.jpeg';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      // Convert the base64 data URL to a Blob
+      const response = await fetch(dataUrl);
+      const blob = await response.blob();
+      const file = new File([blob], 'Galata_anket_sonucu.jpeg', { type: blob.type });
+
+      // Check if Web Share API is supported AND if it's a mobile device
+      if (navigator.share && isMobileDevice()) {
+        await navigator.share({
+          title: 'Galata Anket Sonucu',
+          text: 'Politika tercihlerinizin Amerika başkan adaylarına yakınlık oranları:',
+          files: [file], // Share the screenshot file
+        });
+      } else {
+        // Fallback for desktop: Download the screenshot
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = 'Galata_anket_sonucu.jpeg';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
     } catch (error) {
-      console.error('Ekran görüntüsü alınamadı:', error);
+      console.error('Ekran görüntüsü alınamadı veya paylaşılamadı:', error);
       alert('Ekran görüntüsü alınırken bir hata oluştu. Lütfen tekrar deneyin.');
     }
     setIsLoading(false);
   };
 
   const handleCopyLink = () => {
-    const shareUrl = `${window.location.origin}/`; // Adjust this if your survey starts at a different path
+    const shareUrl = `${window.location.origin}/`;
     navigator.clipboard
       .writeText(shareUrl)
       .then(() => {
-        setShowWarning(true); // Show the warning message
+        setShowWarning(true);
         setTimeout(() => {
-          setShowWarning(false); // Hide the warning after 2 seconds
-        }, 2000); // 2 seconds
+          setShowWarning(false);
+        }, 2000);
       })
       .catch((error) => {
         console.error('Link kopyalanamadı:', error);
@@ -88,48 +108,61 @@ function Result({ KamalaScore, TrumpScore }) {
           className="logo-fixed-bottom"
         />
         <hr />
-        <p style={{ fontSize: '14px',marginTop: '0px' }}>Politika tercihlerinizin Amerika başkan adaylarına yakınlık oranları:</p>
+        <p style={{ fontSize: '14px', marginTop: '0px' }}>
+          Politika tercihlerinizin Amerika başkan adaylarına yakınlık oranları:
+        </p>
         <div className="chart-container" style={{ margin: '0', padding: '0', marginTop: '-50px', marginBottom: '-40px' }}>
-  <ResponsiveContainer width="100%" height={250}>
-    <PieChart>
-      <Pie
-        data={data}
-        cx="50%"
-        cy="50%"
-        labelLine={false}
-        label={({ name, percent }) =>
-          `${name}: ${(percent * 100).toFixed(0)}%`
-        }
-        outerRadius="40%"
-        fill="#8884d8"
-        dataKey="value"
-        isAnimationActive={true}
-      >
-        {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index]} />
-        ))}
-      </Pie>
-      <Tooltip />
-    </PieChart>
-  </ResponsiveContainer>
-</div>
+          <ResponsiveContainer width="100%" height={250}>
+            <PieChart>
+              <Pie
+                data={data}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={({ name, percent }) =>
+                  `${name}: ${(percent * 100).toFixed(0)}%`
+                }
+                outerRadius="40%"
+                fill="#8884d8"
+                dataKey="value"
+                isAnimationActive={true}
+              >
+                {data.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
 
-{/* Conditional message based on the higher percentage */}
-{KamalaPercentage > TrumpPercentage ? (
-  <p style={{ color: '#0000FF', fontSize: '18px', fontWeight: 'bold', marginTop: '0px' }}>
-    Demokratlara daha yakınsınız!
-  </p>
-) : (
-  <p style={{ color: '#FF0000', fontSize: '18px', fontWeight: 'bold', marginTop: '5px' }}>
-    Cumhuriyetçilere daha yakınsınız!
-  </p>
-)}
+        {/* Conditional message based on the higher percentage */}
+        {KamalaPercentage > TrumpPercentage ? (
+          <p style={{ color: '#0000FF', fontSize: '18px', fontWeight: 'bold', marginTop: '0px' }}>
+            Demokratlara daha yakınsınız!
+          </p>
+        ) : (
+          <p style={{ color: '#FF0000', fontSize: '18px', fontWeight: 'bold', marginTop: '5px' }}>
+            Cumhuriyetçilere daha yakınsınız!
+          </p>
+        )}
 
         <hr />
-        Anket linki: <a href={shareUrl} target="_blank" rel="noopener noreferrer" style={{ backgroundColor: "#ccc", padding: '2px 4px', borderRadius: '4px', textDecoration: 'none', color: 'black' }}>
+        Anket linki:{' '}
+        <a
+          href={shareUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            backgroundColor: '#ccc',
+            padding: '2px 4px',
+            borderRadius: '4px',
+            textDecoration: 'none',
+            color: 'black',
+          }}
+        >
           {shareUrl}
         </a>
-
       </div>
       <button
         className="custom-button"
@@ -140,73 +173,33 @@ function Result({ KamalaScore, TrumpScore }) {
         <span style={{ fontSize: '12px' }}>
           Galata Anket'ten yeni anketler için kayıt ol.
         </span>
+        
       </button>
-      <div className="result2">
+      <hr></hr>
         {/* Copy link button */}
         <button onClick={handleCopyLink} className="button-copy-link">
-          <span style={{ fontSize: '14px' }}>
-            Anket linkini kopyala, gönder.
-          </span>
+          <span style={{ fontSize: '14px' }}>Anket linkini kopyala, paylaş.</span>
         </button>
 
         {/* Warning message that appears for 2 seconds */}
         {showWarning && (
-          <p style={{ color: 'green', fontSize: '12px', marginTop: '10px' }}>
+          <p style={{ color: 'white', fontSize: '12px', marginTop: '10px' }}>
             Link kopyalandı!
           </p>
         )}
 
-        {isLoading && <p className="loading">İşlem yapılıyor, lütfen bekleyin...</p>}
+<p style={{ color: 'white', fontSize: '12px', marginTop: '-10px' }}>
+          </p>
 
-        {/* Separate social share section */}
-        <div className="social-share-buttons">
-          <div className="share-icons" style={{ display: 'flex', alignItems: 'center' }}>
-            <span style={{ fontSize: '12px' }}>
-              Sonucu Paylaş:
-            </span>
-
-            <TwitterShareButton
-              title={shareTitle}
-              url={shareUrl}
-              className="share-button"
-            >
-              <TwitterIcon size={32} round />
-            </TwitterShareButton>
-
-            <FacebookShareButton
-              quote={shareTitle}
-              url={shareUrl}
-              className="share-button"
-            >
-              <FacebookIcon size={32} round />
-            </FacebookShareButton>
-
-            <TelegramShareButton
-              title={shareTitle}
-              url={shareUrl}
-              className="share-button"
-            >
-              <TelegramIcon size={32} round />
-            </TelegramShareButton>
-
-            <WhatsappShareButton
-              title={shareTitle}
-              url={shareUrl}
-              className="share-button"
-            >
-              <WhatsappIcon size={32} round />
-            </WhatsappShareButton>
-          </div>
-        </div>
-        <button className="button-copy-link" onClick={handleDownloadScreenshot}>
+        {/* Display appropriate text based on the device */}
+        <button className="button-copy-link" onClick={handleDownloadOrShare}>
           <span style={{ fontSize: '14px' }}>
-            Ekran görüntüsünü kaydet.
+            {isMobileDevice() ? 'Ekran görüntüsünü paylaş.' : 'Ekran görüntüsünü kaydet.'}
           </span>
         </button>
-
+        {isLoading && <p  style={{ color: 'white', fontSize: '12px', marginTop: '10px' }}>İşlem yapılıyor, lütfen bekleyin...</p>}
       </div>
-
-    </div>
+    
   );
 }
 

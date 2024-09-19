@@ -273,4 +273,16 @@ button:focus {
 
 .button-copy-link {
   margin-bottom: 1px;
+  
+  border: none;
+  background-color: #fff; /* Twitter's brand color */
+
+  padding: 12px 24px;
+  margin: 5px 0px;
+  font-size: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 80%; /* Adjust width as needed */
+  max-width: 250px; /* Maximum width */
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
