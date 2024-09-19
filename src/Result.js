@@ -85,7 +85,7 @@ function Result({ KamalaScore, TrumpScore }) {
         />
         <h2>Fikirlerin Amerikan siyasetçilerinden kime daha yakın?</h2>
         <div className="chart-container">
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={200}>
             <PieChart>
               <Pie
                 data={data}
@@ -105,11 +105,11 @@ function Result({ KamalaScore, TrumpScore }) {
                 ))}
               </Pie>
               <Tooltip />
-              <Legend />
+              
             </PieChart>
           </ResponsiveContainer>
         </div>
-        <p>Verdiğiniz cevaplara göre siyasetçilere yakınlık oranları:</p>
+        <p style={{ marginTop: '0px' }}>Verdiğiniz cevaplara göre siyasetçilere yakınlık oranları:</p>
         <p>{KamalaPercentage}% Kamala Harris</p>
         <p>{TrumpPercentage}% Donald Trump</p>
         <hr />
