@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/amerikansecimleri/static/css/main.020b1912.css",
-    "main.js": "/amerikansecimleri/static/js/main.f32ea7b0.js",
+    "main.css": "/amerikansecimleri/static/css/main.1635ef1e.css",
+    "main.js": "/amerikansecimleri/static/js/main.94a9825b.js",
     "static/js/453.b2cc8b81.chunk.js": "/amerikansecimleri/static/js/453.b2cc8b81.chunk.js",
     "index.html": "/amerikansecimleri/index.html",
-    "main.020b1912.css.map": "/amerikansecimleri/static/css/main.020b1912.css.map",
-    "main.f32ea7b0.js.map": "/amerikansecimleri/static/js/main.f32ea7b0.js.map",
+    "main.1635ef1e.css.map": "/amerikansecimleri/static/css/main.1635ef1e.css.map",
+    "main.94a9825b.js.map": "/amerikansecimleri/static/js/main.94a9825b.js.map",
     "453.b2cc8b81.chunk.js.map": "/amerikansecimleri/static/js/453.b2cc8b81.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.020b1912.css",
-    "static/js/main.f32ea7b0.js"
+    "static/css/main.1635ef1e.css",
+    "static/js/main.94a9825b.js"
   ]
 }
