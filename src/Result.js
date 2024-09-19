@@ -7,20 +7,11 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import html2canvas from 'html2canvas';
-import {
-  TwitterShareButton,
-  TwitterIcon,
-  FacebookShareButton,
-  FacebookIcon,
-  TelegramShareButton,
-  TelegramIcon,
-  WhatsappShareButton,
-  WhatsappIcon,
-} from 'react-share';
 
 function Result({ KamalaScore, TrumpScore }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [showWarning, setShowWarning] = useState(false); // State for warning message
+  const [shareInstructions, setShareInstructions] = useState(false); // For desktop share instructions
+  const resultRef = useRef(null);
 
   const totalScore = KamalaScore + TrumpScore;
   const KamalaPercentage = ((KamalaScore / totalScore) * 100).toFixed(0);
@@ -33,9 +24,7 @@ function Result({ KamalaScore, TrumpScore }) {
 
   const COLORS = ['#0000FF', '#FF0000'];
 
-  const resultRef = useRef(null);
-
-  const handleDownloadScreenshot = async () => {
+  const handleDownloadAndShareScreenshot = async () => {
     setIsLoading(true);
     try {
       const element = resultRef.current;
@@ -46,37 +35,36 @@ function Result({ KamalaScore, TrumpScore }) {
       });
       const dataUrl = canvas.toDataURL('image/jpeg');
 
-      const link = document.createElement('a');
-      link.href = dataUrl;
-      link.download = 'Galata_anket_sonucu.jpeg';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      // Convert the base64 data URL to a Blob
+      const response = await fetch(dataUrl);
+      const blob = await response.blob();
+      const file = new File([blob], 'Galata_anket_sonucu.jpeg', { type: blob.type });
+
+      // Check if Web Share API is supported
+      if (navigator.share && file) {
+        await navigator.share({
+          title: 'Galata Anket Sonucu',
+          text: 'Politika tercihlerinizin Amerika başkan adaylarına yakınlık oranları:',
+          files: [file], // Share the screenshot file
+        });
+      } else {
+        // Fallback for desktops: download the screenshot
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = 'Galata_anket_sonucu.jpeg';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Show sharing instructions for desktop users
+        setShareInstructions(true);
+      }
     } catch (error) {
-      console.error('Ekran görüntüsü alınamadı:', error);
+      console.error('Ekran görüntüsü alınamadı veya paylaşılamadı:', error);
       alert('Ekran görüntüsü alınırken bir hata oluştu. Lütfen tekrar deneyin.');
     }
     setIsLoading(false);
   };
-
-  const handleCopyLink = () => {
-    const shareUrl = `${window.location.origin}/`; // Adjust this if your survey starts at a different path
-    navigator.clipboard
-      .writeText(shareUrl)
-      .then(() => {
-        setShowWarning(true); // Show the warning message
-        setTimeout(() => {
-          setShowWarning(false); // Hide the warning after 2 seconds
-        }, 2000); // 2 seconds
-      })
-      .catch((error) => {
-        console.error('Link kopyalanamadı:', error);
-        alert('Link kopyalanamadı.');
-      });
-  };
-
-  const shareUrl = window.location.href;
-  const shareTitle = `Amerikan siyasetçilere yakınlık anketi, benim sonuçlar: ${KamalaPercentage}% Kamala, ${TrumpPercentage}% Trump. 9 soruluk ankete katılmak için linke tıkla.`;
 
   return (
     <div className="result-container">
@@ -88,124 +76,61 @@ function Result({ KamalaScore, TrumpScore }) {
           className="logo-fixed-bottom"
         />
         <hr />
-        <p style={{ fontSize: '14px',marginTop: '0px' }}>Politika tercihlerinizin Amerika başkan adaylarına yakınlık oranları:</p>
-        <div className="chart-container" style={{ margin: '0', padding: '0', marginTop: '-50px', marginBottom: '-40px' }}>
-  <ResponsiveContainer width="100%" height={250}>
-    <PieChart>
-      <Pie
-        data={data}
-        cx="50%"
-        cy="50%"
-        labelLine={false}
-        label={({ name, percent }) =>
-          `${name}: ${(percent * 100).toFixed(0)}%`
-        }
-        outerRadius="40%"
-        fill="#8884d8"
-        dataKey="value"
-        isAnimationActive={true}
-      >
-        {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index]} />
-        ))}
-      </Pie>
-      <Tooltip />
-    </PieChart>
-  </ResponsiveContainer>
-</div>
+        <p style={{ marginTop: '0px' }}>Politika tercihlerinizin Amerika başkan adaylarına yakınlık oranları:</p>
+        <div className="chart-container" style={{ margin: '0', padding: '0', marginBottom: '-40px' }}>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={data}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={({ name, percent }) =>
+                  `${name}: ${(percent * 100).toFixed(0)}%`
+                }
+                outerRadius="40%"
+                fill="#8884d8"
+                dataKey="value"
+                isAnimationActive={true}
+              >
+                {data.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
 
-{/* Conditional message based on the higher percentage */}
-{KamalaPercentage > TrumpPercentage ? (
-  <p style={{ color: '#0000FF', fontSize: '18px', fontWeight: 'bold', marginTop: '0px' }}>
-    Demokratlara daha yakınsınız!
-  </p>
-) : (
-  <p style={{ color: '#FF0000', fontSize: '18px', fontWeight: 'bold', marginTop: '5px' }}>
-    Cumhuriyetçilere daha yakınsınız!
-  </p>
-)}
-
-        <hr />
-        Anket linki: <a href={shareUrl} target="_blank" rel="noopener noreferrer" style={{ backgroundColor: "#ccc", padding: '2px 4px', borderRadius: '4px', textDecoration: 'none', color: 'black' }}>
-          {shareUrl}
-        </a>
-
-      </div>
-      <button
-        className="custom-button"
-        onClick={() =>
-          window.open('https://galataanket.anketekatil.com/auth/register', '_blank')
-        }
-      >
-        <span style={{ fontSize: '12px' }}>
-          Galata Anket'ten yeni anketler için kayıt ol.
-        </span>
-      </button>
-      <div className="result2">
-        {/* Copy link button */}
-        <button onClick={handleCopyLink} className="button-copy-link">
-          <span style={{ fontSize: '14px' }}>
-            Anket linkini kopyala, gönder.
-          </span>
-        </button>
-
-        {/* Warning message that appears for 2 seconds */}
-        {showWarning && (
-          <p style={{ color: 'green', fontSize: '12px', marginTop: '10px' }}>
-            Link kopyalandı!
+        {KamalaPercentage > TrumpPercentage ? (
+          <p style={{ color: '#0000FF', fontSize: '18px', fontWeight: 'bold', marginTop: '0px' }}>
+            Demokratlara daha yakınsınız!
+          </p>
+        ) : (
+          <p style={{ color: '#FF0000', fontSize: '18px', fontWeight: 'bold', marginTop: '5px' }}>
+            Cumhuriyetçilere daha yakınsınız!
           </p>
         )}
 
-        {isLoading && <p className="loading">İşlem yapılıyor, lütfen bekleyin...</p>}
-
-        {/* Separate social share section */}
-        <div className="social-share-buttons">
-          <div className="share-icons" style={{ display: 'flex', alignItems: 'center' }}>
-            <span style={{ fontSize: '12px' }}>
-              Sonucu Paylaş:
-            </span>
-
-            <TwitterShareButton
-              title={shareTitle}
-              url={shareUrl}
-              className="share-button"
-            >
-              <TwitterIcon size={32} round />
-            </TwitterShareButton>
-
-            <FacebookShareButton
-              quote={shareTitle}
-              url={shareUrl}
-              className="share-button"
-            >
-              <FacebookIcon size={32} round />
-            </FacebookShareButton>
-
-            <TelegramShareButton
-              title={shareTitle}
-              url={shareUrl}
-              className="share-button"
-            >
-              <TelegramIcon size={32} round />
-            </TelegramShareButton>
-
-            <WhatsappShareButton
-              title={shareTitle}
-              url={shareUrl}
-              className="share-button"
-            >
-              <WhatsappIcon size={32} round />
-            </WhatsappShareButton>
-          </div>
-        </div>
-        <button className="button-copy-link" onClick={handleDownloadScreenshot}>
-          <span style={{ fontSize: '14px' }}>
-            Ekran görüntüsünü kaydet.
-          </span>
-        </button>
-
+        <hr />
       </div>
 
+      {/* Button to trigger the screenshot and share */}
+      <button className="button-copy-link" onClick={handleDownloadAndShareScreenshot}>
+        <span style={{ fontSize: '14px' }}>
+          Ekran görüntüsünü kaydet ve paylaş
+        </span>
+      </button>
+
+      {isLoading && <p className="loading">İşlem yapılıyor, lütfen bekleyin...</p>}
+
+      {/* Share instructions for desktop users */}
+      {shareInstructions && (
+        <div style={{ marginTop: '20px', fontSize: '14px', color: 'green' }}>
+          <p>Ekran görüntüsü başarıyla kaydedildi!</p>
+          <p>Şimdi dosyayı sosyal medya, e-posta veya mesajlaşma uygulamaları üzerinden paylaşabilirsiniz.</p>
+        </div>
+      )}
     </div>
   );
 }
